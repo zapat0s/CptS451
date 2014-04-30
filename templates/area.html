@@ -60,21 +60,23 @@
                                         <table class="table table-bordered table-hover table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>City</th>
+                                                    <th>Name</th>
                                                     <th>Stars</th>
                                                     <th>Review Count</th>
-                                                    <th>Latitude</th>
+                                                    <th>Address</th>
                                                     <th>Longitude</th>
+                                                    <th>Latitude</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {% for business in nearby_bussinesses %}
                                                 <tr>
-                                                    <td>{{ business[1] }}</td>
-                                                    <td>{{ business[4] }}</td>
-                                                    <td>{{ business[5] }}</td>
-                                                    <td>{{ business[6] }}</td>
-                                                    <td>{{ business[7] }}</td>
+                                                    <td><a href='/reviews/{{ business[0] }}'>{{ business[1] }}</a></td>
+                                                    <td><a href='/reviews/{{ business[0] }}'>{{ business[4] }}</a></td>
+                                                    <td><a href='/reviews/{{ business[0] }}'>{{ business[5] }}</a></td>
+                                                    <td><a href='/reviews/{{ business[0] }}'>{{ business[6] }}</a></td>
+                                                    <td><a href='/reviews/{{ business[0] }}'>{{ business[6] }}</a></td>
+                                                    <td><a href='/reviews/{{ business[0] }}'>{{ business[7] }}</a></td>
                                                 </tr>
                                                 {% endfor %}
                                             </tbody>

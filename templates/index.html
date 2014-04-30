@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Yelp Data</title>
+
+    <!-- Core CSS - Include with every page -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+
+    <!-- Page-Level Plugin CSS - Dashboard -->
+    <link href="{{ url_for('static', filename='css/plugins/morris/morris-0.4.3.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/plugins/timeline/timeline.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Yelp Data</a>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="container content">
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-building-o fa-fw"></i> Businesses
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Stars</th>
+                                                    <th>Review Count</th>
+                                                    <th>Address</th>
+                                                    <th>Longitude</th>
+                                                    <th>Latitude</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for business in bussinesses %}
+                                                <tr class='clickableRow' href='reviews/{{ business[0] }}'>
+                                                    <td><a href='reviews/{{ business[0] }}'>{{ business[1] }}</a></td>
+                                                    <td><a href='reviews/{{ business[0] }}'>{{ business[7] }}</a></td>
+                                                    <td><a href='reviews/{{ business[0] }}'>{{ business[8] }}</a></td>
+                                                    <td><a href='reviews/{{ business[0] }}'>{{ business[2] }}</a></td>
+                                                    <td><a href='reviews/{{ business[0] }}'>{{ business[5] }}</a></td>
+                                                    <td><a href='reviews/{{ business[0] }}'>{{ business[6] }}</a></td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.table-responsive -->
+                                </div>
+                                <!-- /.col-lg-12 (nested) -->
+                                <div class="col-lg-12">
+                                    <div id="morris-bar-chart"></div>
+                                </div>
+                                <!-- /.col-lg-12 (nested) -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Core Scripts - Include with every page -->
+    <script src="{{ url_for('static', filename='js/jquery-1.10.2.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+</body>
+
+</html>

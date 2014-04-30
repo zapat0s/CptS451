@@ -10,16 +10,25 @@ app.config['MYSQL_DATABASE_DB'] = 'yelpdata'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
-@app.route("/reviews/")
-def reviews_view(): # TODO: allow business_id to be specified
+@app.route("/")
+def index_view(): # TODO allow category and location to be specified
     cursor = mysql.connect().cursor()
-    cursor.execute("SELECT * FROM Businesses WHERE business_id = 'IK8ID-Dq7LZsPppx4sKLhg'")
+    cursor.execute("SELECT * FROM Businesses")
+    bussinesses = cursor.fetchall()
+    return render_template('index.html', bussinesses=bussinesses)
+
+@app.route("/reviews/<business_id>")
+def reviews_view(business_id): # TODO: allow business_id to be specified
+    cursor = mysql.connect().cursor()
+    cursor.execute("SELECT * FROM Businesses WHERE business_id = '" + business_id + "'")
     business = cursor.fetchone()
-    cursor.execute("SELECT * FROM Reviews WHERE business_id = 'IK8ID-Dq7LZsPppx4sKLhg' ORDER BY review_date")
+    cursor.execute("SELECT * FROM Reviews WHERE business_id = '" + business_id + "' ORDER BY review_date")
     reviews = cursor.fetchall()
-    cursor.execute("SELECT * FROM Checkins WHERE business_id = 'IK8ID-Dq7LZsPppx4sKLhg' ORDER BY day_time")
+    cursor.execute("SELECT * FROM Checkins WHERE business_id = '" + business_id + "' ORDER BY day_time")
     checkins = cursor.fetchall()
-    cursor.execute("SELECT Businesses.business_id, name, city, category, stars, review_count, latitude, longitude FROM Businesses INNER JOIN BusinessCategories ON Businesses.business_id = BusinessCategories.business_id WHERE category = 'Donuts' AND latitude BETWEEN (" + str(business[5]) + " - 0.15) AND (" + str(business[5]) + " + 0.15) AND longitude BETWEEN (" + str(business[6]) + " - 0.15) AND (" + str(business[6]) + " + 0.15) ORDER BY stars DESC, review_count DESC")
+    cursor.execute("SELECT * FROM BusinessCategories WHERE business_id = '" + business_id + "'")
+    cat = cursor.fetchone()
+    cursor.execute("SELECT Businesses.business_id, name, city, category, stars, review_count, latitude, longitude FROM Businesses INNER JOIN BusinessCategories ON Businesses.business_id = BusinessCategories.business_id WHERE category = '" + cat[1] + "' AND latitude BETWEEN (" + str(business[5]) + " - 0.15) AND (" + str(business[5]) + " + 0.15) AND longitude BETWEEN (" + str(business[6]) + " - 0.15) AND (" + str(business[6]) + " + 0.15) ORDER BY stars DESC, review_count DESC")
     competition = cursor.fetchall()
     return render_template('reviews.html', business=business, reviews=reviews, checkins=checkins, competition=competition)
 
